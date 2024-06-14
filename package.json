@@ -1,0 +1,11 @@
+{
+  "name": "fanfest-take-home",
+  "version": "1",
+  "dependencies": {
+    "turbo": "^1.13.3"
+  },
+  "scripts": {
+    "dev": "turbo dev"
+  },
+  "packageManager": "pnpm@9.1.4"
+}
