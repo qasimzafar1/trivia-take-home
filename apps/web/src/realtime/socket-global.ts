@@ -1,5 +1,5 @@
 import { Socket, io } from 'socket.io-client'
-import type { ClientToServerEvents, ServerToClientEvents } from 'realtime/realtime'
+import { type ClientToServerEvents, type ServerToClientEvents } from 'realtime/realtime'
 
 export class SocketGlobal {
   static socket: Socket<ServerToClientEvents, ClientToServerEvents> | null = null

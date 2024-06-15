@@ -33,7 +33,7 @@ export class AuthController extends AppController {
 
       if (!user) {
         return res
-          .status(401)
+          .status(400)
           .json({ message: "Invalid username or password" });
       }
 
@@ -45,7 +45,7 @@ export class AuthController extends AppController {
 
       if (!isValid) {
         return res
-          .status(401)
+          .status(400)
           .json({ message: "Invalid username or password" });
       }
 
@@ -54,6 +54,29 @@ export class AuthController extends AppController {
       return res.status(201).json({
         user,
         token,
+      });
+    } catch (e) {
+      next(e);
+    }
+  };
+
+  signup = async (
+    req: Request<{ username: string; password: string }>,
+    res: Response,
+    next: NextFunction,
+  ) => {
+    try {
+      const { username, password } = req.body;
+      const user = await this.service.find(username);
+
+      if (user) {
+        return res.status(400).json({ message: "User already exists" });
+      }
+
+      const created = await this.service.createUser(username, password);
+
+      return res.status(201).json({
+        created,
       });
     } catch (e) {
       next(e);

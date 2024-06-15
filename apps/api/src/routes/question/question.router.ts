@@ -14,6 +14,11 @@ export class QuestionRouter extends AppRouter {
     super();
 
     this.router.get("/match-questions", controller.getMatchQuestions);
+    this.router.get(
+      "/:id",
+      authenticationMiddleware.ensureAuthenticated,
+      controller.getQuestion,
+    );
     this.router.post(
       "/",
       authenticationMiddleware.ensureAuthenticated,

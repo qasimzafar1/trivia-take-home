@@ -66,5 +66,5 @@ export class AuthenticationMiddleware extends AppController {
     next();
   };
 
-  private readonly header = "Authorization";
+  private readonly header = "authorization";
 }

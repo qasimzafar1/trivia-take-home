@@ -1,17 +1,23 @@
 export enum ServerToClientEvent {
+  WAITING_FOR_PLAYERS = "WAITING_FOR_PLAYERS",
+  MATCH_STARTED = "MATCH_STARTED",
   MATCH_FINISHED = "MATCH_FINISHED",
 }
 
 export interface ServerToClientEvents {
-  [ServerToClientEvent.MATCH_FINISHED](winner: string | null): void;
+  ["WAITING_FOR_PLAYERS"](): void;
+  ["MATCH_STARTED"](questionId: number): void;
+  ["MATCH_FINISHED"](winnerId: number | null): void;
 }
 
 export enum ClientToServerEvent {
   JOIN_QUEUE = "JOIN_QUEUE",
+  ANSWER = "ANSWER",
 }
 
 export interface ClientToServerEvents {
-  [ClientToServerEvent.JOIN_QUEUE](callback: (success: boolean) => void): void;
+  ["JOIN_QUEUE"](userId: number): void;
+  ["ANSWER"](userId: number, optionId: number): void;
 }
 
 export interface InterServerEvents {}

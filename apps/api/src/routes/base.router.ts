@@ -7,6 +7,8 @@ import pkgJson from "../../package.json";
 import { UserRouter } from "./user/user.router.ts";
 import { AuthenticationMiddleware } from "../middlewares/authentication.middleware.ts";
 import { QuestionRouter } from "./question/question.router.ts";
+import { MatchRouter } from "./match/match.router.ts";
+import { AuthRouter } from "./auth/auth.router.ts";
 
 export class BaseRouter extends AppRouter {
   constructor(
@@ -17,10 +19,16 @@ export class BaseRouter extends AppRouter {
     super();
 
     // SETUP SUB ROUTERS
+    this.router.use("/auth", new AuthRouter(appConfig).router);
     this.router.use(
       "/user",
       authenticationMiddleware.identityUser,
       new UserRouter(appConfig).router,
+    );
+    this.router.use(
+      "/match",
+      authenticationMiddleware.identityUser,
+      new MatchRouter(appConfig).router,
     );
     this.router.use(
       "/question",

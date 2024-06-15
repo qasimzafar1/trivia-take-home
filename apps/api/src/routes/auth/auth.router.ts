@@ -22,5 +22,15 @@ export class AuthRouter extends AppRouter {
       ).validate,
       controller.login,
     );
+    this.router.post(
+      "/signup",
+      new ValidationMiddleware(
+        z.object({
+          username: z.string(),
+          password: z.string(),
+        }),
+      ).validate,
+      controller.signup,
+    );
   }
 }

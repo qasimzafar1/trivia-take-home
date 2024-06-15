@@ -18,14 +18,39 @@ const router = createRouter({
       component: () => import('../views/LoginView.vue')
     },
     {
+      path: '/signup',
+      name: 'signup',
+      // route level code-splitting
+      // this generates a separate chunk (About.[hash].js) for this route
+      // which is lazy-loaded when the route is visited.
+      component: () => import('../views/SignupView.vue')
+    },
+    {
       path: '/match',
       name: 'match',
       // route level code-splitting
       // this generates a separate chunk (About.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
       component: () => import('../views/MatchView.vue')
+    },
+    {
+      path: '/question',
+      name: 'question',
+      component: () => import('../views/QuestionView.vue')
     }
   ]
+})
+
+router.beforeEach((to, from, next) => {
+  const publicPages = ['/', '/login', '/signup']
+  const authRequired = !publicPages.includes(to.path)
+  const loggedIn = localStorage.getItem('token')
+
+  if (authRequired && !loggedIn) {
+    return next('/')
+  }
+
+  next()
 })
 
 export default router

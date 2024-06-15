@@ -27,6 +27,22 @@ export class QuestionController extends AppController {
     }
   };
 
+  getQuestion = async (
+    req: Request<{ id: string }>,
+    res: Response,
+    next: NextFunction,
+  ) => {
+    try {
+      const { id } = req.params;
+      const question = await this.service.getQuestion(Number(id));
+      return res.status(200).json({
+        question,
+      });
+    } catch (e) {
+      next(e);
+    }
+  };
+
   createQuestion = async (
     req: Request<
       unknown,

@@ -32,6 +32,7 @@ export async function setupApp(
   GlobalDB.setup(appConfig.db);
 
   /* PLUGINS: */
+  app.use(express.json());
   app.use(morgan("dev"));
   app.use(
     cors({

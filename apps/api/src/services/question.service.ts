@@ -5,15 +5,32 @@ export class QuestionService extends AppService {
   async getMatchQuestions(size = 5) {
     const db = await this.getDb();
 
-    const list = db.question.findMany({
-      take: size,
+    const questions = await db.$queryRaw<
+      { id: number; question: string }[]
+    >`SELECT * FROM question ORDER BY RANDOM() LIMIT ${size};`;
+
+    const questionIds = questions.map((q) => q.id);
+    const options = await db.questionOption.findMany({
+      where: { questionId: { in: questionIds } },
+    });
+
+    const questionMap = questions.map((question) => ({
+      ...question,
+      options: options.filter((option) => option.questionId === question.id),
+    }));
+
+    return questionMap;
+  }
+
+  async getQuestion(id: number) {
+    const db = await this.getDb();
+
+    return db.question.findUnique({
+      where: { id },
       include: {
         options: true,
       },
     });
-
-    // TODO: Implement shuffling
-    return list;
   }
 
   async createQuestion(

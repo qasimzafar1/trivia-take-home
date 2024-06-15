@@ -16,13 +16,14 @@
   },
   "dependencies": {
     "autoprefixer": "^10.4.19",
+    "axios": "^1.7.2",
     "pinia": "^2.1.7",
     "postcss": "^8.4.38",
+    "realtime": "workspace:*",
     "socket.io-client": "^4.7.5",
     "tailwindcss": "^3.4.4",
     "vue": "^3.4.21",
-    "vue-router": "^4.3.0",
-    "realtime": "workspace:*"
+    "vue-router": "^4.3.0"
   },
   "devDependencies": {
     "@playwright/test": "^1.43.0",
